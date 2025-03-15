@@ -46,6 +46,9 @@ Este projeto utiliza um **ESP32** junto com um **sensor GPS** para coletar dados
 1. Abra o arquivo `index.html` no navegador para visualizar o mapa com as coordenadas GPS.
 2. O mapa será renderizado utilizando o **OpenStreetMap** e mostrará a posição do dispositivo ESP32 em tempo real, junto com os dados de temperatura e umidade.
 
+### 4. Protótipo do Hardware
+![protótipo](Prototipo.jpeg)
+
 ## Exemplo de Uso
 
 1. Com o sistema em funcionamento, o ESP32 envia dados a cada intervalo de tempo configurado.
