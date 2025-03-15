@@ -1,7 +1,7 @@
 const express = require("express");
 const app = express();
 
-let gpsData = { lat: 0, lon: 0 }; // Última localização
+let gpsData = { lat: 0, lon: 0, temp: 0, humidity: 0 }; // Última localização, temperatura e umidade
 let routeHistory = []; // Histórico da rota
 
 app.get("/", (req, res) => {
@@ -53,6 +53,8 @@ app.get("/", (req, res) => {
                 <h1>Localização Atual</h1>
                 <p>Latitude: ${gpsData.lat}</p>
                 <p>Longitude: ${gpsData.lon}</p>
+                <p>Temperatura: ${gpsData.temp}°C</p>
+                <p>Umidade: ${gpsData.humidity}%</p>
                 <a href="https://www.openstreetmap.org/?mlat=${gpsData.lat}&mlon=${gpsData.lon}#map=15/${gpsData.lat}/${gpsData.lon}" target="_blank">Abrir no OpenStreetMap</a>
                 <div id="map" style="width: 100%; height: 500px;"></div>
             </body>
@@ -61,17 +63,19 @@ app.get("/", (req, res) => {
 });
 
 app.get("/update", (req, res) => {
-  if (req.query.lat && req.query.lon) {
+  if (req.query.lat && req.query.lon && req.query.temp && req.query.humidity) {
     let lat = parseFloat(req.query.lat);
     let lon = parseFloat(req.query.lon);
+    let temp = parseFloat(req.query.temp);
+    let humidity = parseFloat(req.query.humidity);
     
-    gpsData = { lat, lon }; // Atualiza a posição atual
+    gpsData = { lat, lon, temp, humidity }; // Atualiza a posição, temperatura e umidade
     routeHistory.push([lat, lon]); // Armazena no histórico da rota
 
-    console.log(`Nova localização: ${lat}, ${lon}`);
-    res.send("Localização atualizada e armazenada na rota!");
+    console.log(`Nova localização: ${lat}, ${lon}, Temperatura: ${temp}, Umidade: ${humidity}`);
+    res.send("Localização, temperatura e umidade atualizadas e armazenadas na rota!");
   } else {
-    res.send("Erro: Passe os parâmetros lat e lon.");
+    res.send("Erro: Passe os parâmetros lat, lon, temp e humidity.");
   }
 });
 
